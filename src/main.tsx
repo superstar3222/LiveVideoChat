@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import axios from 'axios'
 
-import { e11, oai, sk } from './k'
+import { e11, oai, sk } from './constants'
 import { SimliClient } from './SimliClient'
 
 import './styles.css'
