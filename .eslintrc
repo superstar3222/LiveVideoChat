@@ -11,7 +11,6 @@
   ],
   "ignorePatterns": [
     "node_modules",
-    "src-tauri",
     "postcss.config.js",
     "tailwind.config.js",
     ".eslintrc",
@@ -28,7 +27,12 @@
       "version": "detect"
     },
     "tailwindcss": {
-      "callees": ["classnames", "clsx", "ctl", "cn"],
+      "callees": [
+        "classnames",
+        "clsx",
+        "ctl",
+        "cn"
+      ],
       "removeDuplicates": true
     }
   },
@@ -39,7 +43,12 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "simple-import-sort", "prettier"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "simple-import-sort",
+    "prettier"
+  ],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
@@ -69,21 +78,37 @@
       {
         "groups": [
           // Packages from `node` come first.
-          ["^node:"],
+          [
+            "^node:"
+          ],
           // Packages `react` related packages come after.
-          ["^react", "^@tauri-apps(/.*|$)", "^@?\\w"],
+          [
+            "^react",
+            "^@?\\w"
+          ],
           // Internal packages.
-          ["^(@/components)(/.*|$)"],
-          ["^(@/screens)(/.*|$)"],
-          ["^(@/.*|$)"],
+          [
+            "^(@/.*|$)"
+          ],
           // Side effect imports.
-          ["^\\u0000"],
+          [
+            "^\\u0000"
+          ],
           // Parent imports. Put `..` last.
-          ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+          [
+            "^\\.\\.(?!/?$)",
+            "^\\.\\./?$"
+          ],
           // Other relative imports. Put same-folder imports and `.` last.
-          ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+          [
+            "^\\./(?=.*/)(?!/?$)",
+            "^\\.(?!/?$)",
+            "^\\./?$"
+          ],
           // Style imports.
-          ["^.+\\.?(css)$"]
+          [
+            "^.+\\.?(css)$"
+          ]
         ]
       }
     ]

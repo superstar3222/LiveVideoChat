@@ -30,7 +30,3 @@ dist-ssr
 # envars
 .env*
 !.env.*example
-
-# Tauri
-.tauri/
-target/
