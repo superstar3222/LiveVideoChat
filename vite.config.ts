@@ -8,6 +8,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig(async () => ({
   plugins: [react()],
+  base: '/RubyLive/',
   define: { 'import.meta.env.APP_VERSION': `"${process.env.npm_package_version}"` },
   clearScreen: false,
   server: { port: 1420, strictPort: true },
