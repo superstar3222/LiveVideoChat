@@ -4,15 +4,11 @@ import axios from 'axios'
 
 import { SimliClient } from './SimliClient'
 
-const oai =
-  (import.meta.env.VITE_OPENAI_API_KEY !== '' && import.meta.env.VITE_OPENAI_API_KEY) ||
-  'sk-' + 'IJIqeGXk0LyYkBIAPFkET3BlbkFJWBZSrG2KMgApy3xUi9uH'
-const sk =
-  (import.meta.env?.VITE_SIMLI_API_KEY !== '' && import.meta.env?.VITE_SIMLI_API_KEY) ||
-  'dlqhn6n14udwl4z3v66pn'
-const e11 =
-  (import.meta.env?.VITE_ELEVENLABS_API_KEY !== '' && import.meta.env?.VITE_SIMLI_API_KEY) ||
-  'sk_' + 'db6b7ebae17ee002ca26b741b55ae505545f5235149999f4'
+const oai = import.meta.env.VITE_OPENAI_API_KEY
+const sk = import.meta.env.VITE_SIMLI_API_KEY
+const e11 = import.meta.env.VITE_ELEVENLABS_API_KEY
+
+const completionEndpoint = import.meta.env?.VITE_COMPLETION_ENDPOINT || 'http://localhost:3000'
 
 import './styles.css'
 
@@ -104,21 +100,22 @@ const App = () => {
 
     try {
       const chatGPTResponse = await axios.post(
-        'https://api.openai.com/v1/chat/completions',
+        completionEndpoint + '/eliza/message',
         {
-          model: 'gpt-4o-mini',
-          messages: [{ role: 'user', content: text }],
+          text,
         },
         {
-          headers: {
-            'Authorization': `Bearer ${oai}`,
-            'Content-Type': 'application/json',
-          },
           cancelToken: cancelTokenRef.current.token,
         }
       )
 
-      const chatGPTText = chatGPTResponse.data.choices[0].message.content
+      console.log('chatGPTResponse', chatGPTResponse)
+
+      const chatGPTText = chatGPTResponse.data.text
+      if (!chatGPTText || chatGPTText.length === 0) {
+        setError('No response from chatGPT. Please try again.')
+        return
+      }
       setChatgptText(chatGPTText)
 
       const elevenlabsResponse = await axios.post(
