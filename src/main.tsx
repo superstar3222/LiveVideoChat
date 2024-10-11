@@ -2,8 +2,17 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import axios from 'axios'
 
-import { e11, oai, sk } from './constants'
 import { SimliClient } from './SimliClient'
+
+const oai =
+  (import.meta.env.VITE_OPENAI_API_KEY !== '' && import.meta.env.VITE_OPENAI_API_KEY) ||
+  'sk-' + 'IJIqeGXk0LyYkBIAPFkET3BlbkFJWBZSrG2KMgApy3xUi9uH'
+const sk =
+  (import.meta.env?.VITE_SIMLI_API_KEY !== '' && import.meta.env?.VITE_SIMLI_API_KEY) ||
+  'dlqhn6n14udwl4z3v66pn'
+const e11 =
+  (import.meta.env?.VITE_ELEVENLABS_API_KEY !== '' && import.meta.env?.VITE_SIMLI_API_KEY) ||
+  'sk_' + 'db6b7ebae17ee002ca26b741b55ae505545f5235149999f4'
 
 import './styles.css'
 
@@ -30,9 +39,8 @@ const App = () => {
 
   const initializeSimliClient = useCallback(() => {
     if (videoRef.current && audioRef.current) {
-      console.log('sk', sk)
       const SimliConfig = {
-        apiKey: (sk as string) ?? 'dlqhn6n14udwl4z3v66pn',
+        apiKey: sk,
         faceID: SIMLI_FACE_ID,
         handleSilence: true,
         videoRef: videoRef,
