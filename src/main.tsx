@@ -30,8 +30,9 @@ const App = () => {
 
   const initializeSimliClient = useCallback(() => {
     if (videoRef.current && audioRef.current) {
+      console.log('sk', sk)
       const SimliConfig = {
-        apiKey: sk as string,
+        apiKey: (sk as string) ?? 'dlqhn6n14udwl4z3v66pn',
         faceID: SIMLI_FACE_ID,
         handleSilence: true,
         videoRef: videoRef,

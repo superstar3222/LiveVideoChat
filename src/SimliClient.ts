@@ -119,6 +119,9 @@ export class SimliClient extends EventEmitter {
 
     this.dc.addEventListener('message', (evt) => {
       console.log('Received message: ', evt.data)
+      if (evt.data === 'Session Intialization not done, Ignoring audio') {
+        this.emit('failed')
+      }
     })
   }
 
