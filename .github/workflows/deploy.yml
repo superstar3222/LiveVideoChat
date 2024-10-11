@@ -23,9 +23,9 @@ jobs:
 
       - name: Build
         env:
-          VITE_OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          VITE_SIMLI_API_KEY: ${{ secrets.SIMLI_API_KEY }}
-          VITE_ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          VITE_OPENAI_API_KEY: ${{ secrets.VITE_OPENAI_API_KEY }}
+          VITE_SIMLI_API_KEY: ${{ secrets.VITE_SIMLI_API_KEY }}
+          VITE_ELEVENLABS_API_KEY: ${{ secrets.VITE_ELEVENLABS_API_KEY }}
         run: npm run build
 
       - name: Deploy to GitHub Pages
