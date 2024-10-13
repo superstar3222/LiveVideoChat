@@ -100,7 +100,7 @@ const App = () => {
 
     try {
       const chatGPTResponse = await axios.post(
-        completionEndpoint + '/eliza/message',
+        completionEndpoint + '/ruby/message',
         {
           text,
         },
