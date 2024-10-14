@@ -6,7 +6,6 @@ export default ({ mode }) => {
   const env = loadEnv(mode, process.cwd())
 
   return defineConfig({
-    base: '/RubyLive/',
     plugins: [react()],
     define: {
       // Explicitly define the variables you want to inject into the build
