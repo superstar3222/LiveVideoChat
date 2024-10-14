@@ -265,8 +265,9 @@ const App = () => {
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      await processInput(inputText)
+      const input = inputText.trim()
       setInputText('')
+      await processInput(input)
     },
     [inputText, processInput]
   )
