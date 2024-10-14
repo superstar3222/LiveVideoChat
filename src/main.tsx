@@ -108,6 +108,7 @@ const App = () => {
     cancelTokenRef.current = axios.CancelToken.source()
 
     try {
+      console.log('sending input to chatgpt')
       const chatGPTResponse = await axios.post(
         completionEndpoint + '/ruby/message',
         {

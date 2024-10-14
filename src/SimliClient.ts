@@ -44,7 +44,7 @@ export class SimliClient extends EventEmitter {
     const config: RTCConfiguration = {
       iceServers: [{ urls: ['stun:stun.l.google.com:19302'] }],
     }
-    console.log('Server running: ', config.iceServers)
+    // console.log('Server running: ', config.iceServers)
 
     this.pc = new window.RTCPeerConnection(config)
 
@@ -69,7 +69,7 @@ export class SimliClient extends EventEmitter {
     })
 
     this.pc.addEventListener('track', (evt) => {
-      console.log('Track event: ', evt.track.kind)
+      // console.log('Track event: ', evt.track.kind)
       if (evt.track.kind === 'video' && this.videoRef?.current) {
         this.videoRef.current.srcObject = evt.streams[0]
       } else if (evt.track.kind === 'audio' && this.audioRef?.current) {
@@ -118,7 +118,7 @@ export class SimliClient extends EventEmitter {
     })
 
     this.dc.addEventListener('message', (evt) => {
-      console.log('Received message: ', evt.data)
+      // console.log('Received message: ', evt.data)
 
       if (evt.data.includes('START')) {
         this.emit('started')
@@ -145,10 +145,8 @@ export class SimliClient extends EventEmitter {
   }
 
   private sendPingMessage() {
-    console.log('Sending ping message')
     if (this.dc && this.dc.readyState === 'open') {
       const message = 'ping ' + Date.now()
-      console.log('Sending: ' + message)
       try {
         this.dc.send(message)
       } catch (error) {
@@ -239,7 +237,7 @@ export class SimliClient extends EventEmitter {
           this.pc?.iceGatheringState === 'complete' ||
           this.candidateCount === this.prevCandidateCount
         ) {
-          console.log(this.pc?.iceGatheringState, this.candidateCount)
+          // console.log(this.pc?.iceGatheringState, this.candidateCount)
           resolve()
         } else {
           this.prevCandidateCount = this.candidateCount
