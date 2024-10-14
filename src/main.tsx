@@ -20,6 +20,7 @@ const simliClient = new SimliClient()
 const App = () => {
   const [inputText, setInputText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isConnecting, setIsConnecting] = useState(false)
   const [error, setError] = useState('')
   const [_, setChatgptText] = useState('')
   const [startWebRTC, setStartWebRTC] = useState(false)
@@ -52,7 +53,6 @@ const App = () => {
     initializeSimliClient()
 
     const handleConnected = () => {
-      setIsLoading(false)
       console.log('SimliClient is now connected!')
     }
 
@@ -65,14 +65,22 @@ const App = () => {
       setError('Failed to connect to Simli. Please try again.')
     }
 
+    const handleStarted = () => {
+      console.log('SimliClient has started!')
+      setIsLoading(false)
+      setIsConnecting(false)
+    }
+
     simliClient.on('connected', handleConnected)
     simliClient.on('disconnected', handleDisconnected)
     simliClient.on('failed', handleFailed)
+    simliClient.on('started', handleStarted)
 
     return () => {
       simliClient.off('connected', handleConnected)
       simliClient.off('disconnected', handleDisconnected)
       simliClient.off('failed', handleFailed)
+      simliClient.off('started', handleStarted)
       simliClient.close()
     }
   }, [initializeSimliClient])
@@ -81,6 +89,7 @@ const App = () => {
     simliClient.start()
     setStartWebRTC(true)
     setIsLoading(true)
+    setIsConnecting(true)
 
     setTimeout(() => {
       const audioData = new Uint8Array(6000).fill(0)
@@ -275,7 +284,7 @@ const App = () => {
           ></video>
           <audio ref={audioRef} id='simli_audio' autoPlay></audio>
         </div>
-        {startWebRTC ? (
+        {startWebRTC && !isConnecting ? (
           <>
             {/* {chatgptText && <p className='text-center'>{chatgptText}</p>} */}
             <form
@@ -308,12 +317,22 @@ const App = () => {
             </form>
           </>
         ) : (
-          <button
-            onClick={handleStart}
-            className='fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded bg-white px-4 py-2 text-black transition-colors hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black'
-          >
-            Start
-          </button>
+          <>
+            {isConnecting && (
+              <p className='fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
+                Connecting...
+              </p>
+            )}
+            {!isConnecting && (
+              <button
+                disabled={isConnecting}
+                onClick={handleStart}
+                className='fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded bg-white px-4 py-2 text-black transition-colors hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black'
+              >
+                Start
+              </button>
+            )}
+          </>
         )}
         {error && <p className='fixed bottom-20 mt-4 text-center text-red-500'>{error}</p>}
       </div>
