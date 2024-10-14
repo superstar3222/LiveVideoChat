@@ -15,11 +15,13 @@
         "@egoist/tailwindcss-icons": "^1.4.0",
         "@hookform/resolvers": "^3.3.2",
         "@iconify-json/heroicons": "^1.1.15",
+        "@types/uuid": "^10.0.0",
         "axios": "^1.7.7",
         "eventemitter3": "^5.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "simli-client": "^1.1.0"
+        "simli-client": "^1.1.0",
+        "uuid": "^10.0.0"
     },
     "devDependencies": {
         "@tailwindcss/aspect-ratio": "^0.4.2",

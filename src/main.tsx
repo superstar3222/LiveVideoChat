@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import axios from 'axios'
+import { v4 as uuidv4 } from 'uuid'
 
 import { SimliClient } from './SimliClient'
 
@@ -32,6 +33,26 @@ const App = () => {
   const audioContextRef = useRef<any | null>(null)
   const analyserRef = useRef<any | null>(null)
   const microphoneRef = useRef<any | null>(null)
+
+  // TODO: populate these from localStorage if roomid and useruuid are set, otherwise generate a random uuid
+  const [roomID, setRoomID] = useState('')
+  const [userUUID, setUserUUID] = useState('')
+
+  useEffect(() => {
+    const storedRoomID = localStorage.getItem('roomID')
+    const storedUserUUID = localStorage.getItem('userUUID')
+    if (storedRoomID && storedUserUUID) {
+      setRoomID(storedRoomID)
+      setUserUUID(storedUserUUID)
+    } else {
+      const newRoomID = uuidv4()
+      const newUserUUID = uuidv4()
+      setRoomID(newRoomID)
+      setUserUUID(newUserUUID)
+      localStorage.setItem('roomID', newRoomID)
+      localStorage.setItem('userUUID', newUserUUID)
+    }
+  }, [])
 
   const initializeSimliClient = useCallback(() => {
     if (videoRef.current && audioRef.current) {
@@ -112,6 +133,9 @@ const App = () => {
         completionEndpoint + '/ruby/message',
         {
           text,
+          roomId: roomID,
+          userId: userUUID,
+          userName: 'User',
         },
         {
           cancelToken: cancelTokenRef.current.token,
