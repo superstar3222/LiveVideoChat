@@ -177,19 +177,13 @@ const App = () => {
     async (audioBlob: Blob) => {
       const formData = new FormData()
       formData.append('file', audioBlob, 'audio.wav')
-      formData.append('model', 'whisper-1')
 
       try {
-        const response = await axios.post(
-          'https://api.openai.com/v1/audio/transcriptions',
-          formData,
-          {
-            headers: {
-              'Authorization': `Bearer ${oai}`,
-              'Content-Type': 'multipart/form-data',
-            },
-          }
-        )
+        const response = await axios.post(`${completionEndpoint}/ruby/whisper`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
 
         const transcribedText = response.data.text
         await processInput(transcribedText)
