@@ -4,7 +4,6 @@ import axios from 'axios'
 
 import { SimliClient } from './SimliClient'
 
-const oai = import.meta.env.VITE_OPENAI_API_KEY
 const sk = import.meta.env.VITE_SIMLI_API_KEY
 const e11 = import.meta.env.VITE_ELEVENLABS_API_KEY
 
