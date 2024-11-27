@@ -14,5 +14,8 @@ export default ({ mode }) => {
       'import.meta.env.VITE_SIMLI_API_KEY': JSON.stringify(env.VITE_SIMLI_API_KEY),
       'import.meta.env.VITE_ELEVENLABS_API_KEY': JSON.stringify(env.VITE_ELEVENLABS_API_KEY),
     },
+    server: {
+      port: 5173, // Change this to your desired port number
+    },
   })
 }

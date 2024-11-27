@@ -12,6 +12,7 @@ const completionEndpoint = import.meta.env?.VITE_COMPLETION_ENDPOINT || 'http://
 
 import './styles.css'
 
+const AGENT_ID = 'ruby' // this comes from the agentId output from running the Eliza framework, it likely will be in uuid format, i.e. '123e4567-e89b-12d3-a456-426614174000'
 const SIMLI_FACE_ID = '13fbb3e1-4489-4199-ad57-91be4a2dd38b'
 const ELEVENLABS_VOICE_ID = '21m00Tcm4TlvDq8ikWAM'
 
@@ -130,7 +131,7 @@ const App = () => {
     try {
       console.log('sending input to chatgpt')
       const chatGPTResponse = await axios.post(
-        completionEndpoint + '/ruby/message',
+        completionEndpoint + `/${AGENT_ID}/message`,
         {
           text,
           roomId: roomID,
@@ -144,7 +145,7 @@ const App = () => {
 
       console.log('chatGPTResponse', chatGPTResponse)
 
-      const chatGPTText = chatGPTResponse.data.text
+      const chatGPTText = chatGPTResponse.data[0].text
       if (!chatGPTText || chatGPTText.length === 0) {
         setError('No response from chatGPT. Please try again.')
         return
@@ -155,7 +156,7 @@ const App = () => {
         `https://api.elevenlabs.io/v1/text-to-speech/${ELEVENLABS_VOICE_ID}?output_format=pcm_16000`,
         {
           text: chatGPTText,
-          model_id: 'eleven_multilingual_v1',
+          model_id: 'eleven_turbo_v2_5',
         },
         {
           headers: {
@@ -202,7 +203,7 @@ const App = () => {
       formData.append('file', audioBlob, 'audio.wav')
 
       try {
-        const response = await axios.post(`${completionEndpoint}/ruby/whisper`, formData, {
+        const response = await axios.post(`${completionEndpoint}/${AGENT_ID}/whisper`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
