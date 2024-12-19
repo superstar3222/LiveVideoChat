@@ -8,7 +8,7 @@ Live video avatar chat application. Connects to an Eliza instance running the "D
 
 ### Eliza
 
-[Eliza](https://github.com/ai16z/eliza) has to be running and you must paste the agentId into [main.tsx](/src/main.tsx)'s `AGENT_ID` variable.
+[Eliza](https://github.com/superstar3222/eliza) has to be running and you must paste the agentId into [main.tsx](/src/main.tsx)'s `AGENT_ID` variable.
 
 ### Environment Variables
 
